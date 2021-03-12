@@ -27,20 +27,13 @@ public class EditableBufferedReader extends BufferedReader {
 
     public void setRaw() throws IOException {
         String[] cmd = {"/bin/bash", "-c", "stty -echo raw </dev/tty"};
-        try {
-            Runtime.getRuntime().exec(cmd).waitFor();
-        } catch (InterruptedException ex) {
-            System.err.println(ex.toString());
-        }
+        Runtime.getRuntime().exec(cmd);
     }
 
-    public void setCooked() throws IOException {
-        String[] cmd = {"/bin/bash", "-c", "stty -echo cooked </dev/tty"};
-        try {
-            Runtime.getRuntime().exec(cmd).waitFor();
-        } catch (InterruptedException ex) {
-            System.err.println(ex.toString());
-        }
+    public void setCooked() throws IOException { //Con "stty cooked no funciona correctamente el terminal
+        String[] cmd = {"/bin/bash", "-c", "stty sane </dev/tty"};
+        Runtime.getRuntime().exec(cmd);
+
     }
 
     /*
