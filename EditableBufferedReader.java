@@ -94,6 +94,7 @@ public class EditableBufferedReader extends BufferedReader {
     @Override
 
     public String readLine() throws IOException {
+        int toEnd;
         int key;
         this.setRaw();
         Line line = new Line();
@@ -114,7 +115,10 @@ public class EditableBufferedReader extends BufferedReader {
                     System.out.print("\033[" + line.home() + "D"); //Movemos tantas veces a izda. como el resultado de line.home()
                     break;
                 case END:
-                    System.out.print("\033[" + line.end() + "C");
+                    toEnd = line.end();
+                    if(toEnd > 0){
+                    System.out.print("\033[" + toEnd + "C");
+                    }
                     break;
                 case INS:
                     //Aqui no usamos secuencia de escape porque la insercción/sobreescritura se hace en la función setLine()
@@ -122,7 +126,7 @@ public class EditableBufferedReader extends BufferedReader {
                     break;
                 case DEL:
                     if (line.del()) {
-                        System.out.print("\033[3~");
+                        System.out.print("\033[P");
                     }
                     break;
                 case BKSP:
@@ -133,9 +137,9 @@ public class EditableBufferedReader extends BufferedReader {
                     break;
                 default:
                     if (line.setLine((char) key)) { //Casteamos el int para convertirlo a char
+                        System.out.print("\033[@");
                         System.out.print((char) key);
                     } else {
-                        System.out.print("\033[@");
                         System.out.print((char) key);
                     }
 

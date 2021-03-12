@@ -27,14 +27,15 @@ public class Line {
         this.line = new ArrayList<>();
     }
 
+    /*Si estamos al final de la línea procedemos como antes, para cualquier 
+    otro caso usamos set() para sobreescribir el carácter*/ 
     public boolean setLine(char c) {
 
         if (insert) {  //En modo insercción
             line.add(pos, c);
             pos++;
             return true; //Para "controlar" la función readLine() de EditableBufferedReader
-        } /*Si estamos al final de la línea procedemos como antes, para cualquier 
-        otro caso usamos set() para sobreescribir el carácter*/ else { //En modo sobreescritura 
+        } else { //En modo sobreescritura 
 
             if (pos >= line.size() - 1) {
                 line.add(pos, c);
@@ -100,7 +101,7 @@ public class Line {
     }
 
     public boolean bksp() {
-        if (pos > 0){
+        if (pos > 0) {
             line.remove(pos - 1); //Se borra el carácter a la izda.
             pos--; //Además en este caso el cursor también se mueve
             return true;
@@ -108,6 +109,5 @@ public class Line {
             return false;
         }
     }
-    
-    
+
 }
